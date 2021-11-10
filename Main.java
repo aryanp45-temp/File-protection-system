@@ -81,7 +81,8 @@ class EventsOnEn implements ActionListener {
             int r = j.showOpenDialog(null);
 
             if (r == JFileChooser.APPROVE_OPTION) {
-                System.out.println(j.getSelectedFile().getAbsolutePath());
+                String filePath=j.getSelectedFile().getAbsolutePath();
+                System.out.println(filePath);
             } else {
                 System.out.println("the user cancelled the operation");
             }
