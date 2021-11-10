@@ -28,8 +28,8 @@ public class LoginPanel extends JFrame {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(150,70,150,30);
 
-        JButton logiButton = new JButton("Login");
-        logiButton.setBounds(90, 120, 100, 30);
+        JButton logiButton = new JButton(new ImageIcon("Login.jpg"));
+        logiButton.setBounds(90, 120, 90, 30);
         logiButton.setBorder(new RoundedBorder(20));
 
         JButton forgotPassButton = new JButton("Forgot Password??");
