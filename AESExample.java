@@ -10,13 +10,14 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AESExample{
     private static final String ALGO = "AES";
-    private byte[] keyvalue;
+    private static byte[] keyvalue;
 
-    public AESExample(String key){
-        keyvalue= key.getBytes();
-    }
+    // public AESExample(String key){
+    //     keyvalue= key.getBytes();
+    // }
 
-    public String encrypt(String Data) throws Exception{
+    public static String encrypt(String Data, String keyString) throws Exception{
+        keyvalue= keyString.getBytes();
         Key key= generateKey();
         Cipher c= Cipher.getInstance(ALGO);
         c.init(Cipher.ENCRYPT_MODE, key);
@@ -29,8 +30,8 @@ public class AESExample{
         return encryptedValue;
     }
 
-    public String decrypt(String encryptedData) throws Exception{
-        
+    public static String decrypt(String encryptedData, String keyString) throws Exception{
+        keyvalue= keyString.getBytes();
         Base64.Decoder decoder = Base64.getDecoder();  
         byte[] byteArr3 = decoder.decode(encryptedData);
        // String dStr = new String(byteArr3); 
@@ -45,23 +46,23 @@ public class AESExample{
         return decryptedValue;
     }
 
-    private Key generateKey() throws Exception{
+    private static Key generateKey() throws Exception{
         Key key = new SecretKeySpec(keyvalue, ALGO);
         return key;
     }
 
-    public static void main(String[] args) {
-        try{
-            AESExample aes = new AESExample("aaaaaaaaaaaaaa");
-            String encdata = aes.encrypt("brbr chaltoy ata");
-            System.out.println("Encrypted Data: "+ encdata);
-            String decData= aes.decrypt(encdata);
-            System.out.println("Decrypted Data: "+decData);
-        }catch(Exception ex){
-            Logger.getLogger(AESExample.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    // public static void main(String[] args) {
+    //     try{
+    //         AESExample aes = new AESExample("aaaaaaaaaaaaaaaa");
+    //         String encdata = aes.encrypt("brbr chaltoy ata");
+    //         System.out.println("Encrypted Data: "+ encdata);
+    //         String decData= aes.decrypt(encdata);
+    //         System.out.println("Decrypted Data: "+decData);
+    //     }catch(Exception ex){
+    //         Logger.getLogger(AESExample.class.getName()).log(Level.SEVERE, null, ex);
+    //     }
 
-    }
+    // }
 
 
 
