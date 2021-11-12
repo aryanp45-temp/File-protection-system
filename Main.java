@@ -63,9 +63,14 @@ class Main extends JFrame {
         JPanel bePanel = new JPanel();
         bePanel.setLayout(null);
 
+        JPanel rePanel = new JPanel();
+        rePanel.setLayout(null);
+
+
         pane.addTab("Encrypt", new ImageIcon("Lock.png"), enPanel);
         pane.addTab("Decrypt",new ImageIcon("Unlock.png"), dePanel);
-        pane.addTab("Backup Files", new ImageIcon("Backup.png"), bePanel);
+        pane.addTab("Backup", new ImageIcon("Backup-Restore.png"), bePanel);
+        pane.addTab("Restore", new ImageIcon("Backup-Restore.png"), rePanel);
         add(pane);
     }
 
