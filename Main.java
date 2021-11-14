@@ -39,7 +39,8 @@ class Main extends JFrame implements ActionListener {
         enButton.addActionListener(this);
 
         JButton chooseFileButton = new JButton("Choose File");
-        chooseFileButton.setBounds(200, 100, 120, 30);
+        chooseFileButton.setBounds(200, 100, 130, 30);
+        chooseFileButton.setBorder(new RoundedBorder(20));
         chooseFileButton.addActionListener(this);
 
         // choosedJLabel.setBounds(330, 100, 30, 30);
@@ -75,8 +76,42 @@ class Main extends JFrame implements ActionListener {
         JPanel bePanel = new JPanel();
         bePanel.setLayout(null);
 
+        JButton chooseFileButtonB = new JButton("Choose File");
+        chooseFileButtonB.setBounds(200, 100, 120, 30);
+        chooseFileButtonB.addActionListener(this);
+
+        JButton baButton = new JButton("Backup File");
+        baButton.setBounds(150, 250, 130, 35);
+        baButton.addActionListener(this);
+
+        bePanel.add(new FileLabel());
+        bePanel.add(chooseFileButtonB);
+        bePanel.add(baButton);
+
+        // Designing Restore Panel
         JPanel rePanel = new JPanel();
         rePanel.setLayout(null);
+
+        JButton chooseFileButtonR = new JButton("Choose File to Restore");
+        chooseFileButtonR.setBounds(200, 100, 200, 30);
+        chooseFileButtonR.addActionListener(this);
+
+        JLabel folder = new JLabel("Folder: ");
+        folder.setBounds(100, 200, 100, 20);
+
+        JButton chooseFolder = new JButton("Choose Folder");
+        chooseFolder.setBounds(200, 200, 140, 30);
+        chooseFolder.addActionListener(this);
+
+        JButton reButton = new JButton("Restore File");
+        reButton.setBounds(150, 250, 130, 35);
+        reButton.addActionListener(this);
+
+        rePanel.add(new FileLabel());
+        rePanel.add(chooseFileButtonR);
+        rePanel.add(folder);
+        rePanel.add(chooseFolder);
+        rePanel.add(reButton);
 
         pane.addTab("Encrypt", new ImageIcon("Lock.png"), enPanel);
         pane.addTab("Decrypt", new ImageIcon("Unlock.png"), dePanel);
@@ -85,8 +120,9 @@ class Main extends JFrame implements ActionListener {
         add(pane);
     }
 
-
     public static String filePath = "";
+    public static String filePathRe = "";
+    public static String folderPath = "";
     public static String filedir = "";
 
     public void actionPerformed(ActionEvent e) {
@@ -245,10 +281,40 @@ class Main extends JFrame implements ActionListener {
                     "File Decrypted in " + (end_time - st_time) / 1000 + "sec\n Key Used: " + s1, "Message Box",
                     JOptionPane.INFORMATION_MESSAGE);
 
+        } else if (e.getActionCommand() == "Backup File") {
+
+            System.out.println("Inside backup file ");
+            BackupRestore.BackupFile(filePath, this);
+
+        } else if (e.getActionCommand() == "Choose File to Restore") {
+
+            JFileChooser j = new JFileChooser("/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup");
+            int r = j.showOpenDialog(null);
+            System.out.println("inside choose........");
+            if (r == JFileChooser.APPROVE_OPTION) {
+                filePathRe = j.getSelectedFile().getAbsolutePath();
+                System.out.println("got filepath......." + filePathRe);
+            }
+        } else if (e.getActionCommand() == "Choose Folder") {
+
+            JFileChooser chooseFolderR = new JFileChooser();
+            chooseFolderR.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int option = chooseFolderR.showOpenDialog(null);
+            System.out.println("inside choose........");
+            if (option == JFileChooser.APPROVE_OPTION) {
+                folderPath = chooseFolderR.getSelectedFile().getAbsolutePath();
+                System.out.println("got folderpath......." + folderPath);
+            }
+        }else if (e.getActionCommand() == "Restore File"){
+
+            System.out.println("Inside Restore file ");
+
+            BackupRestore.RestoreFile(filePathRe, folderPath, this);
         }
     }
 
-  
+
+
     public static void main(String args[]) {
         Main m = new Main();
         m.setDefaultCloseOperation(3);
@@ -258,8 +324,6 @@ class Main extends JFrame implements ActionListener {
     }
 
 }
-
-
 
 class FileLabel extends JLabel {
     FileLabel() {
