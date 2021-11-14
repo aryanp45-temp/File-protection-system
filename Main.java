@@ -1,26 +1,28 @@
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
+import java.awt.*;
 import java.util.*;
 import java.io.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
-class Main extends JFrame {
+class Main extends JFrame implements ActionListener {
     // static JLabel choosedJLabel= new JLabel(new ImageIcon("check.png"));
     static chooseLabel ch1 = new chooseLabel();
     static chooseLabel ch2 = new chooseLabel();
     static KeyTextField k1 = new KeyTextField();
     static KeyTextField k2 = new KeyTextField();
+    ProgressDialog jp = new ProgressDialog(this);
 
     Main() {
         setTitle("File Protection System");
@@ -34,7 +36,11 @@ class Main extends JFrame {
 
         JButton enButton = new JButton("Encrypt File");
         enButton.setBounds(150, 250, 130, 35);
-        enButton.addActionListener(new EventsOnMain());
+        enButton.addActionListener(this);
+
+        JButton chooseFileButton = new JButton("Choose File");
+        chooseFileButton.setBounds(200, 100, 120, 30);
+        chooseFileButton.addActionListener(this);
 
         // choosedJLabel.setBounds(330, 100, 30, 30);
         // choosedJLabel.setVisible(false);
@@ -42,7 +48,7 @@ class Main extends JFrame {
         enPanel.add(new FileLabel());
         enPanel.add(new KeyLabel());
         enPanel.add(ch1);
-        enPanel.add(new ChooseFileButton());
+        enPanel.add(chooseFileButton);
         enPanel.add(k1);
         enPanel.add(enButton);
 
@@ -52,10 +58,14 @@ class Main extends JFrame {
 
         JButton deButton = new JButton("Decrypt File");
         deButton.setBounds(150, 250, 130, 35);
-        deButton.addActionListener(new EventsOnMain());
+        deButton.addActionListener(this);
+
+        JButton chooseFileButtonD = new JButton("Choose File");
+        chooseFileButtonD.setBounds(200, 100, 120, 30);
+        chooseFileButtonD.addActionListener(this);
 
         dePanel.add(new FileLabel());
-        dePanel.add(new ChooseFileButton());
+        dePanel.add(chooseFileButtonD);
         dePanel.add(ch2);
         dePanel.add(new KeyLabel());
         dePanel.add(k2);
@@ -75,29 +85,19 @@ class Main extends JFrame {
         add(pane);
     }
 
-    public static void main(String args[]) {
-        Main m = new Main();
-        m.setDefaultCloseOperation(3);
 
-        m.setVisible(true);
-
-    }
-
-}
-
-class EventsOnMain implements ActionListener {
     public static String filePath = "";
     public static String filedir = "";
-    long st_time = new Date().getTime();
 
     public void actionPerformed(ActionEvent e) {
 
         if (e.getActionCommand() == "Choose File") {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int r = j.showOpenDialog(null);
-
+            System.out.println("inside choose........");
             if (r == JFileChooser.APPROVE_OPTION) {
                 filePath = j.getSelectedFile().getAbsolutePath();
+                System.out.println("got filepath......." + filePath);
                 File f = new File(filePath);
                 filedir = f.getParent();
                 // System.out.println(filedir);
@@ -109,13 +109,15 @@ class EventsOnMain implements ActionListener {
             }
         } else if (e.getActionCommand() == "Encrypt File") {
 
-            String type = filePath.substring(filePath.length() - 3, filePath.length());
+            String type = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
             System.out.println(type);
             String s1 = Main.k1.getText();
+            long st_time = new Date().getTime();
 
-            if (type.equals("jpg") || type.equals("png") || type.equals("mp3") || type.equals("pdf") || type.equals("mp4")) {
+            if (type.equals("jpg") || type.equals("png") || type.equals("mp3") || type.equals("pdf")
+                    || type.equals("mp4") || type.equals("webm") || type.equals("doc") || type.equals("xls")) {
 
-                AESExample.EnImage(Integer.parseInt(s1), filePath);
+                AESExample.EnImage(Integer.parseInt(s1), filePath, this);
 
             } else {
 
@@ -124,14 +126,29 @@ class EventsOnMain implements ActionListener {
                 String filedata = "";
                 try {
                     BufferedInputStream fin = new BufferedInputStream(new FileInputStream(filePath));
-                    int x = fin.read();
+                    int total = fin.available();
 
+                    jp.jprog.setMinimum(0);
+                    jp.jprog.setMaximum(total);
+                    jp.setTitle("Uploading...");
+                    jp.jprog.setStringPainted(true);
+                    jp.setVisible(true);
+
+                    int i = 1;
+                    int x = fin.read();
                     while (x != -1) {
 
                         filedata = filedata + (char) x;
                         x = fin.read();
+
+                        // progressbar
+                        jp.jprog.paintImmediately(0, 0, 1000, 100);
+                        jp.jprog.setValue(i);
+                        i++;
                     }
                     fin.close();
+                    jp.setVisible(false);
+                    // JOptionPane.showMessageDialog(this, "Done copying");
                     // System.out.println("Filedata : " + filedata);
 
                     String encrypString = AESExample.encrypt(filedata, keyString);
@@ -155,34 +172,51 @@ class EventsOnMain implements ActionListener {
             Main.k1.setText("");
             long end_time = new Date().getTime();
             System.out.println("File Encrypted successfully in " + (end_time - st_time) + " ms");
-            JOptionPane.showMessageDialog(null, "File Encrypted\n Key Used: " + s1, "Message Box",
+            JOptionPane.showMessageDialog(this,
+                    "File Encrypted in " + (end_time - st_time) / 1000 + "sec\n Key Used: " + s1, "Message Box",
                     JOptionPane.INFORMATION_MESSAGE);
 
         } else if (e.getActionCommand() == "Decrypt File") {
             // Logic to Decrypt File
             String s1 = Main.k2.getText();
             String keyString = String.format("%-16s", s1).replace(' ', 'a');
-            String type = filePath.substring(filePath.length() - 11, filePath.length());
+            String type = filePath.substring(filePath.length() - 12, filePath.length());
             System.out.println(type);
             String filedata = "";
             long st_time = new Date().getTime();
 
-            if (type.equals("jpg.fileEnc" )|| type.equals("png.fileEnc") || type.equals("mp3.fileEnc") || type.equals("pdf.fileEnc") || type.equals("mp4.fileEnc")) {
+            if (type.equals(".jpg.fileEnc") || type.equals(".png.fileEnc") || type.equals(".mp3.fileEnc")
+                    || type.equals(".pdf.fileEnc") || type.equals(".mp4.fileEnc") || type.equals("webm.fileEnc")
+                    || type.equals(".doc.fileEnc") || type.equals(".xls.fileEnc")) {
 
-                AESExample.DeImage(Integer.parseInt(s1), filePath);
+                AESExample.DeImage(Integer.parseInt(s1), filePath, this);
 
             } else {
 
                 try {
 
                     BufferedInputStream fin = new BufferedInputStream(new FileInputStream(filePath));
+                    int total = fin.available();
 
+                    jp.jprog.setMinimum(0);
+                    jp.jprog.setMaximum(total);
+                    jp.setTitle("Uploading...");
+                    jp.jprog.setStringPainted(true);
+                    jp.setVisible(true);
+
+                    int i = 1;
                     int x = fin.read();
                     while (x != -1) {
                         filedata = filedata + (char) x;
                         x = fin.read();
+
+                        // progressbar
+                        jp.jprog.paintImmediately(0, 0, 1000, 100);
+                        jp.jprog.setValue(i);
+                        i++;
                     }
                     fin.close();
+                    jp.setVisible(false);
 
                     String decryptString = AESExample.decrypt(filedata, keyString);
                     // System.out.println(decryptString);
@@ -196,32 +230,36 @@ class EventsOnMain implements ActionListener {
 
                     File deleteFile = new File(Temp);
                     deleteFile.delete();
-                    
+
                 } catch (Exception ex) {
                     System.out.println(ex);
                 }
-                
+
             }
-            
+
             Main.ch2.setVisible(false);
             Main.k2.setText("");
             long end_time = new Date().getTime();
             System.out.println("File Decrypted successfully in " + (end_time - st_time) + " ms");
-            JOptionPane.showMessageDialog(null, "File Decrypted\n Key Used: " + s1, "Message Box",
+            JOptionPane.showMessageDialog(null,
+                    "File Decrypted in " + (end_time - st_time) / 1000 + "sec\n Key Used: " + s1, "Message Box",
                     JOptionPane.INFORMATION_MESSAGE);
 
         }
     }
-}
 
-class ChooseFileButton extends JButton {
-    ChooseFileButton() {
-        super("Choose File");
-        setBounds(200, 100, 120, 30);
-        addActionListener(new EventsOnMain());
+  
+    public static void main(String args[]) {
+        Main m = new Main();
+        m.setDefaultCloseOperation(3);
+
+        m.setVisible(true);
 
     }
+
 }
+
+
 
 class FileLabel extends JLabel {
     FileLabel() {
@@ -249,6 +287,18 @@ class chooseLabel extends JLabel {
         super(new ImageIcon("check.png"));
         setBounds(330, 100, 30, 30);
         setVisible(false);
+
+    }
+}
+
+class ProgressDialog extends JDialog {
+    public JProgressBar jprog = new JProgressBar();
+
+    public ProgressDialog(JFrame owner) {
+        super(owner, "Progress", false);
+        setSize(300, 70);
+        setLocation(900, 550);
+        add(jprog, BorderLayout.SOUTH);
 
     }
 }
