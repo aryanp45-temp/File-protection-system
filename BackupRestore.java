@@ -92,7 +92,7 @@ public class BackupRestore {
 
         long end_time = new Date().getTime();
         System.out.println("File Restored successfully in " + (end_time - st_time) + " ms");
-        JOptionPane.showMessageDialog(null, "File Restore Successful \n Time Taken: " + (end_time - st_time) / 1000,
+        JOptionPane.showMessageDialog(null, "File Restore Successful \n Time Taken: " + (end_time - st_time) / 1000+" sec",
                 "Message Box", JOptionPane.INFORMATION_MESSAGE);
 
     }

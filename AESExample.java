@@ -18,6 +18,9 @@ public class AESExample {
 
     public static void EnImage(int key, String filepath, JFrame p) {
         try {
+            if(key==0){
+                key = 1212;
+            }
             BufferedInputStream fis = new BufferedInputStream(new FileInputStream(filepath));
             int total = fis.available();
             ProgressDialog jp = new ProgressDialog(p);
@@ -60,6 +63,9 @@ public class AESExample {
 
     public static void DeImage(int key, String filepath, JFrame p) {
         try {
+            if(key==0){
+                key = 1212;
+            }
             BufferedInputStream fis = new BufferedInputStream(new FileInputStream(filepath));
             int total = fis.available();
             ProgressDialog jp = new ProgressDialog(p);
