@@ -141,18 +141,4 @@ public class AESExample {
         return key;
     }
 
-    // public static void main(String[] args) {
-    // try{
-    // String key="aaaaaaaaaaaaaaaa";
-    // // AESExample aes = new AESExample();
-    // String encdata = AESExample.encrypt("brbr chaltoy ata",key);
-    // System.out.println("Encrypted Data: "+ encdata);
-    // String decData= AESExample.decrypt(encdata,key);
-    // System.out.println("Decrypted Data: "+decData);
-    // }catch(Exception ex){
-    // Logger.getLogger(AESExample.class.getName()).log(Level.SEVERE, null, ex);
-    // }
-
-    // }
-
 }

@@ -1,6 +1,6 @@
 import java.awt.event.*;
 import java.awt.*;
-import java.util.*;
+import java.util.Date;
 import java.io.*;
 
 import javax.swing.ImageIcon;
@@ -40,12 +40,18 @@ class Main extends JFrame implements ActionListener {
         setResizable(false);
         // Designing Encryption Panel
         JTabbedPane pane = new JTabbedPane(JTabbedPane.TOP);
-        JPanel enPanel = new JPanel();
-        enPanel.setLayout(null);
+        OpPanel enPanel = new OpPanel();
+        // enPanel.setLayout(null);
 
         JButton enButton = new JButton("Encrypt File");
         enButton.setBounds(150, 210, 130, 35);
         enButton.addActionListener(this);
+
+        JLabel clickeden = new JLabel("Click Encrypt");
+        clickeden.setBounds(420, 70, 100, 20);
+
+        JLabel clickedimg = new JLabel(new ImageIcon("encrypt32.png"));
+        clickedimg.setBounds(445, 25, 32, 32);
 
         warningLabelE.setBounds(250, 135, 250, 20);
         warningLabelE.setForeground(Color.RED);
@@ -64,7 +70,7 @@ class Main extends JFrame implements ActionListener {
         insArea.setBackground(Color.gray);
         insArea.setForeground(Color.WHITE);
         insArea.setText(
-                "<span style=\"color:white\"><center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Encrypt</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file</b></li></ul></span>");
+                "<span style=\"color:white\"><center><h2>Instructions</h2></center><br><ul><li><b>Choose File of any Standard Extension.</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file.</b></li></ul></span>");
         insArea.setEditable(false);
 
         enPanel.add(new FileLabel());
@@ -75,10 +81,17 @@ class Main extends JFrame implements ActionListener {
         enPanel.add(k1);
         enPanel.add(enButton);
         enPanel.add(insArea);
+        enPanel.add(clickeden);
+        enPanel.add(clickedimg);
 
         // Designing Decryption Panel
-        JPanel dePanel = new JPanel();
-        dePanel.setLayout(null);
+        OpPanel dePanel = new OpPanel();
+
+        JLabel clickedde = new JLabel("Click Decrypt");
+        clickedde.setBounds(420, 70, 100, 20);
+
+        JLabel clickedimgD = new JLabel(new ImageIcon("decrypt32.png"));
+        clickedimgD.setBounds(445, 25, 32, 32);
 
         JButton deButton = new JButton("Decrypt File");
         deButton.setBounds(150, 210, 130, 35);
@@ -102,7 +115,7 @@ class Main extends JFrame implements ActionListener {
         insArea1.setBackground(Color.gray);
         insArea1.setForeground(Color.WHITE);
         insArea1.setText(
-                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Decrypt</b></li><li><b>File should have \".fileEnc\" Extension</b></li><li><b>Key :</b><ol><li>Do not enter Key if not used while Encrypting</li><li>Do not enter wrong key(Data might be lost permanently)</li></ol></li><li><b>Encrypted File will be replaced with Decrypted file</b></li></ul>");
+                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Decrypt.</b></li><li><b>File should have \".fileEnc\" Extension.</b></li><li><b>Key :</b><ol><li>Do not enter Key if not used while Encrypting</li><li>Do not enter wrong key(Data might be lost permanently)</li></ol></li><li><b>Encrypted File will be replaced with Decrypted file.</b></li></ul>");
         insArea1.setEditable(false);
 
         dePanel.add(new FileLabel());
@@ -114,10 +127,11 @@ class Main extends JFrame implements ActionListener {
         dePanel.add(k2);
         dePanel.add(deButton);
         dePanel.add(insArea1);
+        dePanel.add(clickedde);
+        dePanel.add(clickedimgD);
 
         // Designing Backup Panel
-        JPanel bePanel = new JPanel();
-        bePanel.setLayout(null);
+        BaPanel bePanel = new BaPanel();
 
         JButton chooseFileButtonB = new JButton("Choose File");
         chooseFileButtonB.setBounds(250, 100, 130, 30);
@@ -137,7 +151,7 @@ class Main extends JFrame implements ActionListener {
         insArea2.setBackground(Color.gray);
         insArea2.setForeground(Color.WHITE);
         insArea2.setText(
-                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Decrypt</b></li><li><b>File should have \".fileEnc\" Extension</b></li><li><b>Key :</b><ol><li>Do not enter Key if not used while Encrypting</li><li>Do not enter wrong key(Data might be lost permanently)</li></ol></li><li><b>Encrypted File will be replaced with Decrypted file</b></li></ul>");
+                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Backup.</b></li><li><b>File can have any Extension.</b></li><li><b>You can Delete Original File after the Back Up.</b></li><li><b>You can Retrive BackUp file any time.</b></li></li><li><b>BackUp File will be Stored locally in PC.</b></li></ul>");
         insArea2.setEditable(false);
 
         bePanel.add(new FileLabel());
@@ -148,8 +162,7 @@ class Main extends JFrame implements ActionListener {
         bePanel.add(insArea2);
 
         // Designing Restore Panel
-        JPanel rePanel = new JPanel();
-        rePanel.setLayout(null);
+        RePanel rePanel = new RePanel();
 
         JButton chooseFileButtonR = new JButton("Choose File to Restore");
         chooseFileButtonR.setBounds(250, 100, 200, 30);
@@ -180,7 +193,7 @@ class Main extends JFrame implements ActionListener {
         insArea3.setBackground(Color.gray);
         insArea3.setForeground(Color.WHITE);
         insArea3.setText(
-                "<span style=\"color:white\"><center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Encrypt</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file</b></li></ul></span>");
+                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Restore from BackUp Folder.</b></li><li><b>You can only Restore Files which have been BackUp Before.<<li><b>You can Restore Files at any time.</b></li></ul>");
         insArea3.setEditable(false);
 
         rePanel.add(new FileLabel());
@@ -240,7 +253,11 @@ class Main extends JFrame implements ActionListener {
                 long st_time = new Date().getTime();
 
                 if (type.equals("jpg") || type.equals("png") || type.equals("mp3") || type.equals("pdf")
-                        || type.equals("mp4") || type.equals("webm") || type.equals("doc") || type.equals("xls")) {
+                        || type.equals("mp4") || type.equals("webm") || type.equals("doc")  || type.equals("xls")
+                        || type.equals("docx") || type.equals("ppt") || type.equals("pptx") || type.equals("xlsx")
+                        || type.equals("pub") || type.equals("one") || type.equals("jpeg")  || type.equals("gif")
+                        || type.equals("bmp") || type.equals("tif") || type.equals("raw")   || type.equals("wav")
+                        || type.equals("m3u") || type.equals("asx") || type.equals("avi")   || type.equals("mkv") || type.equals("mpeg") || type.equals("mpg")  || type.equals("exe") || type.equals("zip") || type.equals("odt")   || type.equals("ott") || type.equals("oth") || type.equals("odm")) {
 
                     if (s1.length() < 1) {
                         AESExample.EnImage(0, filePath, this);
@@ -328,7 +345,11 @@ class Main extends JFrame implements ActionListener {
 
                 if (type.equals(".jpg.fileEnc") || type.equals(".png.fileEnc") || type.equals(".mp3.fileEnc")
                         || type.equals(".pdf.fileEnc") || type.equals(".mp4.fileEnc") || type.equals("webm.fileEnc")
-                        || type.equals(".doc.fileEnc") || type.equals(".xls.fileEnc")) {
+                        || type.equals(".doc.fileEnc") || type.equals(".xls.fileEnc") || type.equals("docx.fileEnc")
+                        || type.equals(".ppt.fileEnc") || type.equals("pptx.fileEnc") || type.equals("xlsx.fileEnc")
+                        || type.equals(".pub.fileEnc") || type.equals(".one.fileEnc") || type.equals("jpeg.fileEnc")
+                        || type.equals(".gif.fileEnc") || type.equals(".bmp.fileEnc") || type.equals(".tif.fileEnc")
+                        || type.equals(".raw.fileEnc") || type.equals(".wav.fileEnc") || type.equals(".m3u.fileEnc") || type.equals(".asx.fileEnc") || type.equals(".avi.fileEnc") || type.equals(".mkv.fileEnc") || type.equals("mpeg.fileEnc") || type.equals(".mpg.fileEnc") || type.equals(".exe.fileEnc") || type.equals(".zip.fileEnc") || type.equals(".odt.fileEnc") || type.equals(".ott.fileEnc") || type.equals(".oth.fileEnc") || type.equals(".odm.fileEnc")) {
 
                     if (s1.length() < 1) {
                         AESExample.DeImage(0, filePath, this);
@@ -500,6 +521,134 @@ class ProgressDialog extends JDialog {
         setSize(300, 70);
         setLocation(720, 550);
         add(jprog, BorderLayout.SOUTH);
+
+    }
+}
+
+class OpPanel extends JPanel {
+    OpPanel() {
+        setLayout(null);
+        JLabel choosed = new JLabel("Choose File");
+        choosed.setBounds(90, 70, 100, 20);
+
+        JLabel Entered = new JLabel("Enter Key");
+        Entered.setBounds(260, 70, 100, 20);
+
+        JLabel file = new JLabel(new ImageIcon("Files32.png"));
+        file.setBounds(115, 25, 32, 32);
+
+        JLabel key = new JLabel(new ImageIcon("Key32.png"));
+        key.setBounds(285, 25, 32, 32);
+
+        add(choosed);
+        add(Entered);
+        add(file);
+        add(key);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.CYAN);
+        g.fillOval(100, 10, 60, 60);
+        g.fillOval(270, 10, 60, 60);
+        g.fillOval(430, 10, 60, 60);
+
+        g.setColor(Color.RED);
+        g.drawOval(100, 10, 60, 60);
+        g.drawOval(270, 10, 60, 60);
+        g.drawOval(430, 10, 60, 60);
+
+        // g.setColor(Color.BLACK);
+        // g.fillOval(155, 35, 10, 10);
+        // g.fillOval(265, 35, 10, 10);
+        // g.fillOval(325, 35, 10, 10);
+        // g.fillOval(425, 35, 10, 10);
+
+        g.drawLine(160, 40, 270, 40);
+        g.drawLine(330, 40, 430, 40);
+
+    }
+}
+
+class BaPanel extends JPanel {
+    BaPanel() {
+        setLayout(null);
+        JLabel choosed = new JLabel("Choose File");
+        choosed.setBounds(155, 70, 100, 20);
+
+        JLabel BackUp = new JLabel("Click Backup");
+        BackUp.setBounds(360, 70, 100, 20);
+
+        JLabel file = new JLabel(new ImageIcon("Files32.png"));
+        file.setBounds(175, 25, 32, 32);
+
+        JLabel backup = new JLabel(new ImageIcon("backup32.png"));
+        backup.setBounds(385, 25, 32, 32);
+
+        add(choosed);
+        add(BackUp);
+        add(file);
+        add(backup);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.CYAN);
+        g.fillOval(160, 10, 60, 60);
+        g.fillOval(370, 10, 60, 60);
+
+        g.setColor(Color.RED);
+        g.drawOval(160, 10, 60, 60);
+        g.drawOval(370, 10, 60, 60);
+
+        g.drawLine(225, 40, 370, 40);
+
+    }
+}
+
+class RePanel extends JPanel {
+    RePanel() {
+        setLayout(null);
+        JLabel choosed = new JLabel("Choose File");
+        choosed.setBounds(90, 70, 100, 20);
+
+        JLabel Entered = new JLabel("Choose Folder");
+        Entered.setBounds(250, 70, 120, 20);
+
+        JLabel Restored = new JLabel("Click Restore");
+        Restored.setBounds(410, 70, 100, 20);
+
+        JLabel file = new JLabel(new ImageIcon("Files32.png"));
+        file.setBounds(115, 25, 32, 32);
+
+        JLabel key = new JLabel(new ImageIcon("Folder32.png"));
+        key.setBounds(285, 25, 32, 32);
+
+        JLabel restore = new JLabel(new ImageIcon("Restore32.png"));
+        restore.setBounds(445, 25, 32, 32);
+
+        add(choosed);
+        add(Entered);
+        add(Restored);
+        add(file);
+        add(key);
+        add(restore);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.CYAN);
+        g.fillOval(100, 10, 60, 60);
+        g.fillOval(270, 10, 60, 60);
+        g.fillOval(430, 10, 60, 60);
+
+        g.setColor(Color.RED);
+        g.drawOval(100, 10, 60, 60);
+        g.drawOval(270, 10, 60, 60);
+        g.drawOval(430, 10, 60, 60);
+
+        g.drawLine(160, 40, 270, 40);
+        g.drawLine(330, 40, 430, 40);
 
     }
 }
