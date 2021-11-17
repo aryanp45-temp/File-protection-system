@@ -19,11 +19,15 @@ import javax.swing.filechooser.FileSystemView;
 
 class Main extends JFrame implements ActionListener {
     // static JLabel choosedJLabel= new JLabel(new ImageIcon("check.png"));
-    static chooseLabel ch1 = new chooseLabel();
-    static chooseLabel ch2 = new chooseLabel();
-    static chooseLabel ch3 = new chooseLabel();
+    chooseLabel ch1 = new chooseLabel();
+    chooseLabel ch2 = new chooseLabel();
+    chooseLabel ch3 = new chooseLabel();
+    static chooseLabel ch4 = new chooseLabel();
+    static chooseLabel ch5 = new chooseLabel();
+
     static KeyTextField k1 = new KeyTextField();
     static KeyTextField k2 = new KeyTextField();
+
     ProgressDialog jp = new ProgressDialog(this);
     JLabel warningLabelE = new JLabel("Please Select file to Encrypt !!!");
     JLabel warningLabelD = new JLabel("Please Select file to Decrypt !!!");
@@ -34,17 +38,20 @@ class Main extends JFrame implements ActionListener {
     JLabel warningLabelR2 = new JLabel("Please Select Folder to save Restored File !!");
 
     Main() {
-        setTitle("File Protection System");
+        setTitle("Secure Vault");
         setSize(600, 600);
         setLocation(610, 190);
         setResizable(false);
-        // Designing Encryption Panel
+
         JTabbedPane pane = new JTabbedPane(JTabbedPane.TOP);
+        pane.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+
+        // Designing Encryption Panel************************************************
         OpPanel enPanel = new OpPanel();
-        // enPanel.setLayout(null);
 
         JButton enButton = new JButton("Encrypt File");
         enButton.setBounds(150, 210, 130, 35);
+        enButton.setBorder(new RoundedBorder(20));
         enButton.addActionListener(this);
 
         JLabel clickeden = new JLabel("Click Encrypt");
@@ -60,8 +67,10 @@ class Main extends JFrame implements ActionListener {
         JButton chooseFileButton = new JButton("Choose File");
         chooseFileButton.setBounds(250, 100, 130, 30);
         chooseFileButton.setToolTipText("Select File to Encrypt");
-        // chooseFileButton.setBorder(new RoundedBorder(20));
+        chooseFileButton.setBorder(new RoundedBorder(20));
         chooseFileButton.addActionListener(this);
+
+        ch1.setBounds(400, 100, 30, 30);
 
         // instruction for Encryption
         JEditorPane insArea = new JEditorPane();
@@ -70,7 +79,7 @@ class Main extends JFrame implements ActionListener {
         insArea.setBackground(Color.gray);
         insArea.setForeground(Color.WHITE);
         insArea.setText(
-                "<span style=\"color:white\"><center><h2>Instructions</h2></center><br><ul><li><b>Choose File of any Standard Extension.</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file.</b></li></ul></span>");
+                "<span style=\"color:white\"><center><h2>Instructions</h2></center><br><ul><li><b>Choose File of any Standard Extension.</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>Please Note down the Key, If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file.</b></li></ul></span>");
         insArea.setEditable(false);
 
         enPanel.add(new FileLabel());
@@ -84,7 +93,7 @@ class Main extends JFrame implements ActionListener {
         enPanel.add(clickeden);
         enPanel.add(clickedimg);
 
-        // Designing Decryption Panel
+        // Designing Decryption Panel*******************************************
         OpPanel dePanel = new OpPanel();
 
         JLabel clickedde = new JLabel("Click Decrypt");
@@ -95,6 +104,7 @@ class Main extends JFrame implements ActionListener {
 
         JButton deButton = new JButton("Decrypt File");
         deButton.setBounds(150, 210, 130, 35);
+        deButton.setBorder(new RoundedBorder(20));
         deButton.addActionListener(this);
 
         warningLabelD.setBounds(250, 135, 250, 20);
@@ -107,7 +117,10 @@ class Main extends JFrame implements ActionListener {
 
         JButton chooseFileButtonD = new JButton("Choose File");
         chooseFileButtonD.setBounds(250, 100, 130, 30);
+        chooseFileButtonD.setBorder(new RoundedBorder(20));
         chooseFileButtonD.addActionListener(this);
+
+        ch2.setBounds(400, 100, 30, 30);
 
         JEditorPane insArea1 = new JEditorPane();
         insArea1.setContentType("text/html");
@@ -130,12 +143,15 @@ class Main extends JFrame implements ActionListener {
         dePanel.add(clickedde);
         dePanel.add(clickedimgD);
 
-        // Designing Backup Panel
+        // Designing Backup Panel****************************************************
         BaPanel bePanel = new BaPanel();
 
         JButton chooseFileButtonB = new JButton("Choose File");
         chooseFileButtonB.setBounds(250, 100, 130, 30);
+        chooseFileButtonB.setBorder(new RoundedBorder(20));
         chooseFileButtonB.addActionListener(this);
+
+        ch3.setBounds(400, 100, 30, 30);
 
         warningLabelB.setBounds(250, 135, 250, 20);
         warningLabelB.setForeground(Color.RED);
@@ -143,6 +159,7 @@ class Main extends JFrame implements ActionListener {
 
         JButton baButton = new JButton("Backup File");
         baButton.setBounds(200, 160, 130, 35);
+        baButton.setBorder(new RoundedBorder(20));
         baButton.addActionListener(this);
 
         JEditorPane insArea2 = new JEditorPane();
@@ -161,12 +178,15 @@ class Main extends JFrame implements ActionListener {
         bePanel.add(ch3);
         bePanel.add(insArea2);
 
-        // Designing Restore Panel
+        // Designing Restore Panel************************************************
         RePanel rePanel = new RePanel();
 
         JButton chooseFileButtonR = new JButton("Choose File to Restore");
-        chooseFileButtonR.setBounds(250, 100, 200, 30);
+        chooseFileButtonR.setBounds(250, 100, 220, 30);
+        chooseFileButtonR.setBorder(new RoundedBorder(20));
         chooseFileButtonR.addActionListener(this);
+
+        ch4.setBounds(470, 100, 30, 30);
 
         warningLabelR1.setBounds(250, 135, 250, 20);
         warningLabelR1.setForeground(Color.RED);
@@ -174,10 +194,14 @@ class Main extends JFrame implements ActionListener {
 
         JLabel folder = new JLabel("Folder: ");
         folder.setBounds(150, 160, 120, 30);
+        folder.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 
         JButton chooseFolder = new JButton("Choose Folder");
-        chooseFolder.setBounds(250, 160, 140, 30);
+        chooseFolder.setBounds(250, 160, 160, 30);
+        chooseFolder.setBorder(new RoundedBorder(20));
         chooseFolder.addActionListener(this);
+
+        ch5.setBounds(410, 160, 30, 30);
 
         warningLabelR2.setBounds(250, 195, 350, 20);
         warningLabelR2.setForeground(Color.RED);
@@ -185,6 +209,7 @@ class Main extends JFrame implements ActionListener {
 
         JButton reButton = new JButton("Restore File");
         reButton.setBounds(200, 220, 130, 35);
+        reButton.setBorder(new RoundedBorder(20));
         reButton.addActionListener(this);
 
         JEditorPane insArea3 = new JEditorPane();
@@ -204,11 +229,17 @@ class Main extends JFrame implements ActionListener {
         rePanel.add(warningLabelR1);
         rePanel.add(warningLabelR2);
         rePanel.add(insArea3);
+        rePanel.add(ch4);
+        rePanel.add(ch5);
+
+        // Designing About Panel******************************************************
+        AboutPanel abPanel = new AboutPanel();
 
         pane.addTab("Encrypt", new ImageIcon("Lock.png"), enPanel);
         pane.addTab("Decrypt", new ImageIcon("Unlock.png"), dePanel);
         pane.addTab("Backup", new ImageIcon("Backup-Restore.png"), bePanel);
         pane.addTab("Restore", new ImageIcon("Backup-Restore.png"), rePanel);
+        pane.addTab("About", new ImageIcon("about.png"), abPanel);
         add(pane);
     }
 
@@ -229,11 +260,11 @@ class Main extends JFrame implements ActionListener {
                 File f = new File(filePath);
                 filedir = f.getParent();
                 // System.out.println(filedir);
-                Main.ch1.setVisible(true);
+                ch1.setVisible(true);
                 warningLabelE.setVisible(false);
-                Main.ch2.setVisible(true);
+                ch2.setVisible(true);
                 warningLabelD.setVisible(false);
-                Main.ch3.setVisible(true);
+                ch3.setVisible(true);
                 warningLabelB.setVisible(false);
 
             } else {
@@ -253,11 +284,13 @@ class Main extends JFrame implements ActionListener {
                 long st_time = new Date().getTime();
 
                 if (type.equals("jpg") || type.equals("png") || type.equals("mp3") || type.equals("pdf")
-                        || type.equals("mp4") || type.equals("webm") || type.equals("doc")  || type.equals("xls")
+                        || type.equals("mp4") || type.equals("webm") || type.equals("doc") || type.equals("xls")
                         || type.equals("docx") || type.equals("ppt") || type.equals("pptx") || type.equals("xlsx")
-                        || type.equals("pub") || type.equals("one") || type.equals("jpeg")  || type.equals("gif")
-                        || type.equals("bmp") || type.equals("tif") || type.equals("raw")   || type.equals("wav")
-                        || type.equals("m3u") || type.equals("asx") || type.equals("avi")   || type.equals("mkv") || type.equals("mpeg") || type.equals("mpg")  || type.equals("exe") || type.equals("zip") || type.equals("odt")   || type.equals("ott") || type.equals("oth") || type.equals("odm")) {
+                        || type.equals("pub") || type.equals("one") || type.equals("jpeg") || type.equals("gif")
+                        || type.equals("bmp") || type.equals("tif") || type.equals("raw") || type.equals("wav")
+                        || type.equals("m3u") || type.equals("asx") || type.equals("avi") || type.equals("mkv")
+                        || type.equals("mpeg") || type.equals("mpg") || type.equals("exe") || type.equals("zip")
+                        || type.equals("odt") || type.equals("ott") || type.equals("oth") || type.equals("odm")) {
 
                     if (s1.length() < 1) {
                         AESExample.EnImage(0, filePath, this);
@@ -276,7 +309,7 @@ class Main extends JFrame implements ActionListener {
 
                         jp.jprog.setMinimum(0);
                         jp.jprog.setMaximum(total);
-                        jp.setTitle("Uploading...");
+                        jp.setTitle("Encrypting...");
                         jp.jprog.setStringPainted(true);
                         jp.setVisible(true);
 
@@ -314,7 +347,10 @@ class Main extends JFrame implements ActionListener {
                     }
                 }
 
-                Main.ch1.setVisible(false);
+                jp.setVisible(false);
+                ch1.setVisible(false);
+                ch2.setVisible(false);
+                ch3.setVisible(false);
                 Main.k1.setText("");
                 long end_time = new Date().getTime();
                 System.out.println("File Encrypted successfully in " + (end_time - st_time) + " ms");
@@ -349,7 +385,11 @@ class Main extends JFrame implements ActionListener {
                         || type.equals(".ppt.fileEnc") || type.equals("pptx.fileEnc") || type.equals("xlsx.fileEnc")
                         || type.equals(".pub.fileEnc") || type.equals(".one.fileEnc") || type.equals("jpeg.fileEnc")
                         || type.equals(".gif.fileEnc") || type.equals(".bmp.fileEnc") || type.equals(".tif.fileEnc")
-                        || type.equals(".raw.fileEnc") || type.equals(".wav.fileEnc") || type.equals(".m3u.fileEnc") || type.equals(".asx.fileEnc") || type.equals(".avi.fileEnc") || type.equals(".mkv.fileEnc") || type.equals("mpeg.fileEnc") || type.equals(".mpg.fileEnc") || type.equals(".exe.fileEnc") || type.equals(".zip.fileEnc") || type.equals(".odt.fileEnc") || type.equals(".ott.fileEnc") || type.equals(".oth.fileEnc") || type.equals(".odm.fileEnc")) {
+                        || type.equals(".raw.fileEnc") || type.equals(".wav.fileEnc") || type.equals(".m3u.fileEnc")
+                        || type.equals(".asx.fileEnc") || type.equals(".avi.fileEnc") || type.equals(".mkv.fileEnc")
+                        || type.equals("mpeg.fileEnc") || type.equals(".mpg.fileEnc") || type.equals(".exe.fileEnc")
+                        || type.equals(".zip.fileEnc") || type.equals(".odt.fileEnc") || type.equals(".ott.fileEnc")
+                        || type.equals(".oth.fileEnc") || type.equals(".odm.fileEnc")) {
 
                     if (s1.length() < 1) {
                         AESExample.DeImage(0, filePath, this);
@@ -366,7 +406,7 @@ class Main extends JFrame implements ActionListener {
 
                         jp.jprog.setMinimum(0);
                         jp.jprog.setMaximum(total);
-                        jp.setTitle("Uploading...");
+                        jp.setTitle("Decrypting...");
                         jp.jprog.setStringPainted(true);
                         jp.setVisible(true);
 
@@ -403,7 +443,10 @@ class Main extends JFrame implements ActionListener {
 
                 }
 
-                Main.ch2.setVisible(false);
+                jp.setVisible(false);
+                ch1.setVisible(false);
+                ch2.setVisible(false);
+                ch3.setVisible(false);
                 Main.k2.setText("");
                 long end_time = new Date().getTime();
                 System.out.println("File Decrypted successfully in " + (end_time - st_time) + " ms");
@@ -422,16 +465,22 @@ class Main extends JFrame implements ActionListener {
 
                 System.out.println("Inside backup file ");
                 BackupRestore.BackupFile(filePath, this);
+                jp.setVisible(false);
+                ch1.setVisible(false);
+                ch2.setVisible(false);
+                ch3.setVisible(false);
+
             }
 
         } else if (e.getActionCommand() == "Choose File to Restore") {
-
+         // Enter Backup Folder path in DestinationFilePath
             JFileChooser j = new JFileChooser("/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup");
             int r = j.showOpenDialog(null);
             System.out.println("inside choose........");
             if (r == JFileChooser.APPROVE_OPTION) {
                 filePathRe = j.getSelectedFile().getAbsolutePath();
                 System.out.println("got filepath......." + filePathRe);
+                ch4.setVisible(true);
                 warningLabelR1.setVisible(false);
             }
         } else if (e.getActionCommand() == "Choose Folder") {
@@ -443,6 +492,7 @@ class Main extends JFrame implements ActionListener {
             if (option == JFileChooser.APPROVE_OPTION) {
                 folderPath = chooseFolderR.getSelectedFile().getAbsolutePath();
                 System.out.println("got folderpath......." + folderPath);
+                ch5.setVisible(true);
                 warningLabelR2.setVisible(false);
             }
         } else if (e.getActionCommand() == "Restore File") {
@@ -468,6 +518,9 @@ class Main extends JFrame implements ActionListener {
 
                 System.out.println("Inside Restore file ");
                 BackupRestore.RestoreFile(filePathRe, folderPath, this);
+                jp.setVisible(false);
+                ch4.setVisible(false);
+                ch5.setVisible(false);
             }
         }
     }
@@ -485,13 +538,15 @@ class Main extends JFrame implements ActionListener {
 class FileLabel extends JLabel {
     FileLabel() {
         super("File: ");
-        setBounds(150, 100, 100, 20);
+        setBounds(150, 105, 100, 20);
+        setFont(new Font("Comic Sans MS", Font.BOLD, 18));
     }
 }
 
 class KeyLabel extends JLabel {
     KeyLabel() {
         super("Key: ");
+        setFont(new Font("Comic Sans MS", Font.BOLD, 18));
         setBounds(150, 160, 130, 20);
     }
 }
@@ -507,7 +562,7 @@ class KeyTextField extends JTextField {
 class chooseLabel extends JLabel {
     chooseLabel() {
         super(new ImageIcon("check.png"));
-        setBounds(400, 100, 30, 30);
+        // setBounds(400, 100, 30, 30);
         setVisible(false);
 
     }
@@ -649,6 +704,53 @@ class RePanel extends JPanel {
 
         g.drawLine(160, 40, 270, 40);
         g.drawLine(330, 40, 430, 40);
+
+    }
+}
+
+class AboutPanel extends JPanel {
+    AboutPanel() {
+        setLayout(null);
+        JLabel logo = new JLabel(new ImageIcon("logo_black.jpeg"));
+        // logo.setBounds(175, 5, 250, 200);
+        logo.setBounds(200, 5, 200, 200);
+        JLabel l1 = new JLabel("SecureVault is a small and lightweight File Protection System .");
+        l1.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+        l1.setBounds(40, 210, 550, 30);
+
+        JLabel l2 = new JLabel("Created By -        Group - 12 IF5I");
+        l2.setBounds(60, 320, 400, 20);
+        l2.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        
+        l2.setForeground(Color.RED);
+        JLabel l4 = new JLabel("26 Ayush Bhavsar.");
+        l4.setBounds(240, 350, 400, 20);
+        l4.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+        
+        JLabel l5 = new JLabel("31 Nikhil Gujar.");
+        l5.setBounds(240, 380, 400, 20);
+        l5.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+        
+        JLabel l3 = new JLabel("61 Aryan Patil.");
+        l3.setBounds(240, 410, 400, 20);
+        l3.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+        
+        JLabel l6 = new JLabel("Copyright © 2021-2022 - the SecureVault team.");
+        l6.setBounds(100, 240, 450, 20);
+        l6.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+        
+        JLabel l7 = new JLabel("Credits");
+        l7.setBounds(270, 280, 100, 30);
+        l7.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
+
+        add(logo);
+        add(l1);
+        add(l2);
+        add(l3);
+        add(l4);
+        add(l5);
+        add(l6);
+        add(l7);
 
     }
 }

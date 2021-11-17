@@ -26,7 +26,7 @@ public class AESExample {
             ProgressDialog jp = new ProgressDialog(p);
             jp.jprog.setMinimum(0);
             jp.jprog.setMaximum(total);
-            jp.setTitle("Uploading...");
+            jp.setTitle("Encrypting...");
             jp.jprog.setStringPainted(true);
             jp.setVisible(true);
 
@@ -71,7 +71,7 @@ public class AESExample {
             ProgressDialog jp = new ProgressDialog(p);
             jp.jprog.setMinimum(0);
             jp.jprog.setMaximum(total);
-            jp.setTitle("Uploading...");
+            jp.setTitle("Decrypting...");
             jp.jprog.setStringPainted(true);
             jp.setVisible(true);
 

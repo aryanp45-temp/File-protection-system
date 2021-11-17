@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 public class BackupRestore {
 
     public static void BackupFile(String filepath, JFrame parent) {
+        // Enter Backup Folder path in DestinationFilePath
         String destfilepath = "/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup/"
                 + filepath.substring(filepath.lastIndexOf("/") + 1, filepath.length());
         System.out.println(destfilepath);
@@ -37,9 +38,9 @@ public class BackupRestore {
                 jp.jprog.setValue(j);
                 j++;
             }
+            jp.setVisible(false);
             fis.close();
             fout.close();
-            jp.setVisible(false);
 
         } catch (Exception e) {
             e.printStackTrace();
