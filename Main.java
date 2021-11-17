@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileSystemView;
 
 class Main extends JFrame implements ActionListener {
-    // static JLabel choosedJLabel= new JLabel(new ImageIcon("check.png"));
     chooseLabel ch1 = new chooseLabel();
     chooseLabel ch2 = new chooseLabel();
     chooseLabel ch3 = new chooseLabel();
@@ -40,7 +39,6 @@ class Main extends JFrame implements ActionListener {
     JLabel warningLabelR2 = new JLabel("Please Select Folder to save Restored File !!");
     static KeyWarning keyWarningLabel1 = new KeyWarning();
     static KeyWarning keyWarningLabel2 = new KeyWarning();
-
 
     Main() {
         setTitle("Secure Vault");
@@ -266,13 +264,10 @@ class Main extends JFrame implements ActionListener {
         if (e.getActionCommand() == "Choose File") {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int r = j.showOpenDialog(null);
-            System.out.println("inside choose........");
             if (r == JFileChooser.APPROVE_OPTION) {
                 filePath = j.getSelectedFile().getAbsolutePath();
-                System.out.println("got filepath......." + filePath);
                 File f = new File(filePath);
                 filedir = f.getParent();
-                // System.out.println(filedir);
                 ch1.setVisible(true);
                 warningLabelE.setVisible(false);
                 ch2.setVisible(true);
@@ -308,7 +303,6 @@ class Main extends JFrame implements ActionListener {
             } else {
 
                 String type = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
-                System.out.println(type);
                 String s1 = Main.k1.getText();
                 long st_time = new Date().getTime();
 
@@ -358,15 +352,11 @@ class Main extends JFrame implements ActionListener {
                         }
                         fin.close();
                         jp.setVisible(false);
-                        // JOptionPane.showMessageDialog(this, "Done copying");
-                        // System.out.println("Filedata : " + filedata);
 
                         String encrypString = AESExample.encrypt(filedata, keyString);
-                        // System.out.println(encrypString);
 
                         String Temp = filePath;
                         filePath = filePath + ".fileEnc";
-                        // System.out.println(filePath);
                         BufferedOutputStream fout = new BufferedOutputStream(new FileOutputStream(filePath));
                         fout.write(encrypString.getBytes());
                         fout.close();
@@ -385,7 +375,6 @@ class Main extends JFrame implements ActionListener {
                 ch3.setVisible(false);
                 Main.k1.setText("");
                 long end_time = new Date().getTime();
-                System.out.println("File Encrypted successfully in " + (end_time - st_time) + " ms");
                 JOptionPane.showMessageDialog(this,
                         "File Encrypted in " + (end_time - st_time) / 1000 + "sec\n Key Used: " + s1, "Message Box",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -399,7 +388,6 @@ class Main extends JFrame implements ActionListener {
                 warningLabelD.setVisible(true);
 
             } else if (!filePath.substring(filePath.length() - 7, filePath.length()).equals("fileEnc")) {
-                System.out.println(filePath.substring(filePath.length() - 7, filePath.length()));
                 warningLabelD1.setVisible(true);
 
             } else {
@@ -407,7 +395,6 @@ class Main extends JFrame implements ActionListener {
                 String s1 = Main.k2.getText();
                 String keyString = String.format("%-16s", s1).replace(' ', 'a');
                 String type = filePath.substring(filePath.length() - 12, filePath.length());
-                System.out.println(type);
                 String filedata = "";
                 long st_time = new Date().getTime();
 
@@ -459,11 +446,9 @@ class Main extends JFrame implements ActionListener {
                         jp.setVisible(false);
 
                         String decryptString = AESExample.decrypt(filedata, keyString);
-                        // System.out.println(decryptString);
 
                         String Temp = filePath;
                         filePath = filePath.substring(0, filePath.length() - 8);
-                        // System.out.println(filePath);
                         BufferedOutputStream fout = new BufferedOutputStream(new FileOutputStream(filePath));
                         fout.write(decryptString.getBytes());
                         fout.close();
@@ -484,7 +469,6 @@ class Main extends JFrame implements ActionListener {
                 ch3.setVisible(false);
                 Main.k2.setText("");
                 long end_time = new Date().getTime();
-                System.out.println("File Decrypted successfully in " + (end_time - st_time) + " ms");
                 JOptionPane.showMessageDialog(null,
                         "File Decrypted in " + (end_time - st_time) / 1000 + "sec\n Key Used: " + s1, "Message Box",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -501,7 +485,6 @@ class Main extends JFrame implements ActionListener {
                 warningLabelB2.setVisible(true);
             } else {
 
-                System.out.println("Inside backup file ");
                 BackupRestore.BackupFile(filePath, this);
                 filePath = null;
                 jp.setVisible(false);
@@ -515,10 +498,8 @@ class Main extends JFrame implements ActionListener {
             // Enter Backup Folder path in DestinationFilePath
             JFileChooser j = new JFileChooser("/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup");
             int r = j.showOpenDialog(null);
-            System.out.println("inside choose........");
             if (r == JFileChooser.APPROVE_OPTION) {
                 filePathRe = j.getSelectedFile().getAbsolutePath();
-                System.out.println("got filepath......." + filePathRe);
                 ch4.setVisible(true);
                 warningLabelR1.setVisible(false);
             }
@@ -527,10 +508,8 @@ class Main extends JFrame implements ActionListener {
             JFileChooser chooseFolderR = new JFileChooser();
             chooseFolderR.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             int option = chooseFolderR.showOpenDialog(null);
-            System.out.println("inside choose........");
             if (option == JFileChooser.APPROVE_OPTION) {
                 folderPath = chooseFolderR.getSelectedFile().getAbsolutePath();
-                System.out.println("got folderpath......." + folderPath);
                 ch5.setVisible(true);
                 warningLabelR2.setVisible(false);
             }
@@ -555,7 +534,6 @@ class Main extends JFrame implements ActionListener {
 
             } else {
 
-                System.out.println("Inside Restore file ");
                 BackupRestore.RestoreFile(filePathRe, folderPath, this);
                 filePathRe = null;
                 folderPath = null;
@@ -591,8 +569,9 @@ class KeyLabel extends JLabel {
         setBounds(150, 160, 130, 20);
     }
 }
-class KeyWarning extends JLabel{
-    KeyWarning(){
+
+class KeyWarning extends JLabel {
+    KeyWarning() {
         super("You Can Only Enter Numbers !!");
         setBounds(250, 192, 300, 20);
         setForeground(Color.RED);
@@ -610,11 +589,11 @@ class KeyTextField extends JTextField implements KeyListener {
 
     public void keyPressed(KeyEvent e) {
         char c = e.getKeyChar();
-        if(Character.isLetter(c)){
+        if (Character.isLetter(c)) {
             this.setEditable(false);
             Main.keyWarningLabel1.setVisible(true);
             Main.keyWarningLabel2.setVisible(true);
-        }else{
+        } else {
             this.setEditable(true);
             Main.keyWarningLabel1.setVisible(false);
             Main.keyWarningLabel2.setVisible(true);
@@ -622,16 +601,17 @@ class KeyTextField extends JTextField implements KeyListener {
 
     }
 
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 
 }
 
 class chooseLabel extends JLabel {
     chooseLabel() {
         super(new ImageIcon("check.png"));
-        // setBounds(400, 100, 30, 30);
         setVisible(false);
 
     }
@@ -791,8 +771,8 @@ class AboutPanel extends JPanel {
     AboutPanel() {
         setLayout(null);
         JLabel logo = new JLabel(new ImageIcon("logo_black.jpeg"));
-        // logo.setBounds(175, 5, 250, 200);
         logo.setBounds(200, 5, 200, 200);
+
         JLabel l1 = new JLabel("SecureVault is a small and lightweight File Protection System .");
         l1.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
         l1.setBounds(40, 210, 550, 30);

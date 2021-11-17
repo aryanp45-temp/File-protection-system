@@ -10,7 +10,6 @@ public class BackupRestore {
         // Enter Backup Folder path in DestinationFilePath
         String destfilepath = "/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup/"
                 + filepath.substring(filepath.lastIndexOf("/") + 1, filepath.length());
-        System.out.println(destfilepath);
         long st_time = new Date().getTime();
 
         try {
@@ -46,7 +45,6 @@ public class BackupRestore {
         }
 
         long end_time = new Date().getTime();
-        System.out.println("File BackUp successfully in " + (end_time - st_time) + " ms");
         JOptionPane.showMessageDialog(null, "File BackUp Successful \n Time Taken: " + (end_time - st_time) / 1000,
                 "Message Box", JOptionPane.INFORMATION_MESSAGE);
 
@@ -54,7 +52,6 @@ public class BackupRestore {
 
     public static void RestoreFile(String filepath, String folder, JFrame parent) {
         String destfilepath = folder + filepath.substring(filepath.lastIndexOf("/") , filepath.length());
-        System.out.println(destfilepath);
         long st_time = new Date().getTime();
 
         try {
@@ -90,7 +87,6 @@ public class BackupRestore {
         }
 
         long end_time = new Date().getTime();
-        System.out.println("File Restored successfully in " + (end_time - st_time) + " ms");
         JOptionPane.showMessageDialog(null, "File Restore Successful \n Time Taken: " + (end_time - st_time) / 1000+" sec",
                 "Message Box", JOptionPane.INFORMATION_MESSAGE);
 
