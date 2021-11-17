@@ -29,7 +29,6 @@ public class BackupRestore {
             int b = fis.read();
 
             while (b != -1) {
-                // System.out.print(b);
                 fout.write((byte) b);
                 b = fis.read();
 
@@ -74,7 +73,6 @@ public class BackupRestore {
             int b = fis.read();
 
             while (b != -1) {
-                // System.out.print(b);
                 fout.write((byte) b);
                 b = fis.read();
 

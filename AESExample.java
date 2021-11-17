@@ -4,17 +4,11 @@ import java.io.*;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-// import sun.misc.Base64Decoder;
-// import sun.misc.Base64Encoder;
 import javax.swing.JFrame;
 
 public class AESExample {
     private static final String ALGO = "AES";
     private static byte[] keyvalue;
-
-    // public AESExample(String key){
-    // keyvalue= key.getBytes();
-    // }
 
     public static void EnImage(int key, String filepath, JFrame p) {
         try {
@@ -35,9 +29,9 @@ public class AESExample {
             fis.read(data);
             int i = 0;
             for (byte b : data) {
-                // System.out.print(b);
                 data[i] = (byte) (b ^ key);
                 i++;
+
                 // progressbar
                 jp.jprog.paintImmediately(0, 0, 1000, 100);
                 jp.jprog.setValue(j);
@@ -80,7 +74,6 @@ public class AESExample {
             fis.read(data);
             int i = 0;
             for (byte b : data) {
-                // System.out.println(b);
                 data[i] = (byte) (b ^ key);
                 i++;
                 // progressbar
@@ -112,7 +105,6 @@ public class AESExample {
         Cipher c = Cipher.getInstance(ALGO);
         c.init(Cipher.ENCRYPT_MODE, key);
         byte[] encVal = c.doFinal(Data.getBytes());
-        // String encryptedValue= new Base64Decoder().encode(encVal);
         Base64.Encoder encoder = Base64.getEncoder();
         byte[] byteArr2 = encoder.encode(encVal);
         String encryptedValue = new String(byteArr2);
@@ -124,12 +116,9 @@ public class AESExample {
         keyvalue = keyString.getBytes();
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] byteArr3 = decoder.decode(encryptedData);
-        // String dStr = new String(byteArr3);
-        // byte[] decodedVaule = dStr.getBytes(dStr);
         Key key = generateKey();
         Cipher c = Cipher.getInstance(ALGO);
         c.init(Cipher.DECRYPT_MODE, key);
-        // byte[] decodedData= encryptedData.getBytes("UTF-8");
         byte[] decValue = c.doFinal(byteArr3);
         String decryptedValue = new String(decValue);
 

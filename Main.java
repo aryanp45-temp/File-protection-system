@@ -30,12 +30,17 @@ class Main extends JFrame implements ActionListener {
 
     ProgressDialog jp = new ProgressDialog(this);
     JLabel warningLabelE = new JLabel("Please Select file to Encrypt !!!");
+
     JLabel warningLabelD = new JLabel("Please Select file to Decrypt !!!");
     JLabel warningLabelD1 = new JLabel(
             "<html>Selected File is not Encrypted !!!<br> Please Select encrypted File.</html>");
     JLabel warningLabelB = new JLabel("Please Select File to Backup !!");
+    JLabel warningLabelB2 = new JLabel("Selected File is already in BackUp !!");
     JLabel warningLabelR1 = new JLabel("Please Select File to Restore !!");
     JLabel warningLabelR2 = new JLabel("Please Select Folder to save Restored File !!");
+    static KeyWarning keyWarningLabel1 = new KeyWarning();
+    static KeyWarning keyWarningLabel2 = new KeyWarning();
+
 
     Main() {
         setTitle("Secure Vault");
@@ -92,6 +97,7 @@ class Main extends JFrame implements ActionListener {
         enPanel.add(insArea);
         enPanel.add(clickeden);
         enPanel.add(clickedimg);
+        enPanel.add(keyWarningLabel1);
 
         // Designing Decryption Panel*******************************************
         OpPanel dePanel = new OpPanel();
@@ -124,7 +130,7 @@ class Main extends JFrame implements ActionListener {
 
         JEditorPane insArea1 = new JEditorPane();
         insArea1.setContentType("text/html");
-        insArea1.setBounds(70, 270, 460, 220);
+        insArea1.setBounds(70, 270, 460, 230);
         insArea1.setBackground(Color.gray);
         insArea1.setForeground(Color.WHITE);
         insArea1.setText(
@@ -142,6 +148,7 @@ class Main extends JFrame implements ActionListener {
         dePanel.add(insArea1);
         dePanel.add(clickedde);
         dePanel.add(clickedimgD);
+        dePanel.add(keyWarningLabel2);
 
         // Designing Backup Panel****************************************************
         BaPanel bePanel = new BaPanel();
@@ -156,6 +163,10 @@ class Main extends JFrame implements ActionListener {
         warningLabelB.setBounds(250, 135, 250, 20);
         warningLabelB.setForeground(Color.RED);
         warningLabelB.setVisible(false);
+
+        warningLabelB2.setBounds(250, 135, 300, 20);
+        warningLabelB2.setForeground(Color.RED);
+        warningLabelB2.setVisible(false);
 
         JButton baButton = new JButton("Backup File");
         baButton.setBounds(200, 160, 130, 35);
@@ -175,6 +186,7 @@ class Main extends JFrame implements ActionListener {
         bePanel.add(chooseFileButtonB);
         bePanel.add(baButton);
         bePanel.add(warningLabelB);
+        bePanel.add(warningLabelB2);
         bePanel.add(ch3);
         bePanel.add(insArea2);
 
@@ -247,6 +259,7 @@ class Main extends JFrame implements ActionListener {
     public static String filePathRe = null;
     public static String folderPath = null;
     public static String filedir = "";
+    public static boolean alreadyExists = false;
 
     public void actionPerformed(ActionEvent e) {
 
@@ -266,6 +279,22 @@ class Main extends JFrame implements ActionListener {
                 warningLabelD.setVisible(false);
                 ch3.setVisible(true);
                 warningLabelB.setVisible(false);
+
+                // Logic to check if File Exists in Backup
+                File file = new File("/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup");
+                String forBackupFileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
+                String[] filenames;
+                filenames = file.list();
+                for (String string : filenames) {
+                    if (forBackupFileName.equals(string)) {
+                        alreadyExists = true;
+                        warningLabelB2.setVisible(true);
+                        break;
+                    } else {
+                        alreadyExists = false;
+                        warningLabelB2.setVisible(false);
+                    }
+                }
 
             } else {
                 System.out.println("the user cancelled the operation");
@@ -294,8 +323,10 @@ class Main extends JFrame implements ActionListener {
 
                     if (s1.length() < 1) {
                         AESExample.EnImage(0, filePath, this);
+                        filePath = null;
                     } else {
                         AESExample.EnImage(Integer.parseInt(s1), filePath, this);
+                        filePath = null;
                     }
 
                 } else {
@@ -341,6 +372,7 @@ class Main extends JFrame implements ActionListener {
                         fout.close();
                         File deleteFile = new File(Temp);
                         deleteFile.delete();
+                        filePath = null;
 
                     } catch (Exception ex) {
                         System.out.println(ex);
@@ -393,8 +425,10 @@ class Main extends JFrame implements ActionListener {
 
                     if (s1.length() < 1) {
                         AESExample.DeImage(0, filePath, this);
+                        filePath = null;
                     } else {
                         AESExample.DeImage(Integer.parseInt(s1), filePath, this);
+                        filePath = null;
                     }
 
                 } else {
@@ -436,6 +470,7 @@ class Main extends JFrame implements ActionListener {
 
                         File deleteFile = new File(Temp);
                         deleteFile.delete();
+                        filePath = null;
 
                     } catch (Exception ex) {
                         System.out.println(ex);
@@ -461,10 +496,14 @@ class Main extends JFrame implements ActionListener {
 
                 warningLabelB.setVisible(true);
 
+            } else if (alreadyExists) {
+                warningLabelB.setVisible(false);
+                warningLabelB2.setVisible(true);
             } else {
 
                 System.out.println("Inside backup file ");
                 BackupRestore.BackupFile(filePath, this);
+                filePath = null;
                 jp.setVisible(false);
                 ch1.setVisible(false);
                 ch2.setVisible(false);
@@ -473,7 +512,7 @@ class Main extends JFrame implements ActionListener {
             }
 
         } else if (e.getActionCommand() == "Choose File to Restore") {
-         // Enter Backup Folder path in DestinationFilePath
+            // Enter Backup Folder path in DestinationFilePath
             JFileChooser j = new JFileChooser("/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup");
             int r = j.showOpenDialog(null);
             System.out.println("inside choose........");
@@ -518,6 +557,8 @@ class Main extends JFrame implements ActionListener {
 
                 System.out.println("Inside Restore file ");
                 BackupRestore.RestoreFile(filePathRe, folderPath, this);
+                filePathRe = null;
+                folderPath = null;
                 jp.setVisible(false);
                 ch4.setVisible(false);
                 ch5.setVisible(false);
@@ -550,13 +591,41 @@ class KeyLabel extends JLabel {
         setBounds(150, 160, 130, 20);
     }
 }
+class KeyWarning extends JLabel{
+    KeyWarning(){
+        super("You Can Only Enter Numbers !!");
+        setBounds(250, 192, 300, 20);
+        setForeground(Color.RED);
+        setVisible(false);
+    }
+}
 
-class KeyTextField extends JTextField {
+class KeyTextField extends JTextField implements KeyListener {
     KeyTextField() {
         super(20);
         setBounds(250, 160, 120, 30);
+        addKeyListener(this);
         setToolTipText("Key should be less than 16 characters!!");
     }
+
+    public void keyPressed(KeyEvent e) {
+        char c = e.getKeyChar();
+        if(Character.isLetter(c)){
+            this.setEditable(false);
+            Main.keyWarningLabel1.setVisible(true);
+            Main.keyWarningLabel2.setVisible(true);
+        }else{
+            this.setEditable(true);
+            Main.keyWarningLabel1.setVisible(false);
+            Main.keyWarningLabel2.setVisible(true);
+        }
+
+    }
+
+    public void keyTyped(KeyEvent e) {}
+
+    public void keyReleased(KeyEvent e) {}
+
 }
 
 class chooseLabel extends JLabel {
@@ -576,6 +645,7 @@ class ProgressDialog extends JDialog {
         setSize(300, 70);
         setLocation(720, 550);
         add(jprog, BorderLayout.SOUTH);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
     }
 }
@@ -583,6 +653,10 @@ class ProgressDialog extends JDialog {
 class OpPanel extends JPanel {
     OpPanel() {
         setLayout(null);
+
+        JLabel logo = new JLabel(new ImageIcon("Logo70.png"));
+        logo.setBounds(4, 4, 72, 58);
+
         JLabel choosed = new JLabel("Choose File");
         choosed.setBounds(90, 70, 100, 20);
 
@@ -599,6 +673,7 @@ class OpPanel extends JPanel {
         add(Entered);
         add(file);
         add(key);
+        add(logo);
     }
 
     public void paintComponent(Graphics g) {
@@ -613,12 +688,6 @@ class OpPanel extends JPanel {
         g.drawOval(270, 10, 60, 60);
         g.drawOval(430, 10, 60, 60);
 
-        // g.setColor(Color.BLACK);
-        // g.fillOval(155, 35, 10, 10);
-        // g.fillOval(265, 35, 10, 10);
-        // g.fillOval(325, 35, 10, 10);
-        // g.fillOval(425, 35, 10, 10);
-
         g.drawLine(160, 40, 270, 40);
         g.drawLine(330, 40, 430, 40);
 
@@ -628,6 +697,10 @@ class OpPanel extends JPanel {
 class BaPanel extends JPanel {
     BaPanel() {
         setLayout(null);
+
+        JLabel logo = new JLabel(new ImageIcon("Logo70.png"));
+        logo.setBounds(4, 4, 72, 58);
+
         JLabel choosed = new JLabel("Choose File");
         choosed.setBounds(155, 70, 100, 20);
 
@@ -644,6 +717,7 @@ class BaPanel extends JPanel {
         add(BackUp);
         add(file);
         add(backup);
+        add(logo);
     }
 
     public void paintComponent(Graphics g) {
@@ -664,6 +738,10 @@ class BaPanel extends JPanel {
 class RePanel extends JPanel {
     RePanel() {
         setLayout(null);
+
+        JLabel logo = new JLabel(new ImageIcon("Logo70.png"));
+        logo.setBounds(4, 4, 72, 58);
+
         JLabel choosed = new JLabel("Choose File");
         choosed.setBounds(90, 70, 100, 20);
 
@@ -682,6 +760,7 @@ class RePanel extends JPanel {
         JLabel restore = new JLabel(new ImageIcon("Restore32.png"));
         restore.setBounds(445, 25, 32, 32);
 
+        add(logo);
         add(choosed);
         add(Entered);
         add(Restored);
@@ -721,24 +800,24 @@ class AboutPanel extends JPanel {
         JLabel l2 = new JLabel("Created By -        Group - 12 IF5I");
         l2.setBounds(60, 320, 400, 20);
         l2.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
-        
+
         l2.setForeground(Color.RED);
         JLabel l4 = new JLabel("26 Ayush Bhavsar.");
         l4.setBounds(240, 350, 400, 20);
         l4.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
-        
+
         JLabel l5 = new JLabel("31 Nikhil Gujar.");
         l5.setBounds(240, 380, 400, 20);
         l5.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
-        
+
         JLabel l3 = new JLabel("61 Aryan Patil.");
         l3.setBounds(240, 410, 400, 20);
         l3.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
-        
+
         JLabel l6 = new JLabel("Copyright © 2021-2022 - the SecureVault team.");
         l6.setBounds(100, 240, 450, 20);
         l6.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-        
+
         JLabel l7 = new JLabel("Credits");
         l7.setBounds(270, 280, 100, 30);
         l7.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
