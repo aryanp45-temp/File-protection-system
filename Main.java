@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.filechooser.FileSystemView;
 
 class Main extends JFrame implements ActionListener {
@@ -23,23 +24,35 @@ class Main extends JFrame implements ActionListener {
     chooseLabel ch3 = new chooseLabel();
     static chooseLabel ch4 = new chooseLabel();
     static chooseLabel ch5 = new chooseLabel();
-
+    
     static KeyTextField k1 = new KeyTextField();
     static KeyTextField k2 = new KeyTextField();
-
+    
     ProgressDialog jp = new ProgressDialog(this);
     JLabel warningLabelE = new JLabel("Please Select file to Encrypt !!!");
-
+    
     JLabel warningLabelD = new JLabel("Please Select file to Decrypt !!!");
     JLabel warningLabelD1 = new JLabel(
-            "<html>Selected File is not Encrypted !!!<br> Please Select encrypted File.</html>");
-    JLabel warningLabelB = new JLabel("Please Select File to Backup !!");
-    JLabel warningLabelB2 = new JLabel("Selected File is already in BackUp !!");
-    JLabel warningLabelR1 = new JLabel("Please Select File to Restore !!");
-    JLabel warningLabelR2 = new JLabel("Please Select Folder to save Restored File !!");
-    static KeyWarning keyWarningLabel1 = new KeyWarning();
-    static KeyWarning keyWarningLabel2 = new KeyWarning();
-
+        "<html>Selected File is not Encrypted !!!<br> Please Select encrypted File.</html>");
+        JLabel warningLabelB = new JLabel("Please Select File to Backup !!");
+        JLabel warningLabelB2 = new JLabel("Selected File is already in BackUp !!");
+        JLabel warningLabelR1 = new JLabel("Please Select File to Restore !!");
+        JLabel warningLabelR2 = new JLabel("Please Select Folder to save Restored File !!");
+        static KeyWarning keyWarningLabel1 = new KeyWarning();
+        static KeyWarning keyWarningLabel2 = new KeyWarning();
+        
+        JButton chooseFileButton = new JButton(new ImageIcon("choose_file.png"));
+        JButton chooseFileButtonD = new JButton(new ImageIcon("choose_file.png"));
+        JButton chooseFileButtonB = new JButton(new ImageIcon("choose_file.png"));
+        JButton chooseFileButtonR = new JButton(new ImageIcon("choose_file.png"));
+        JButton chooseFolder = new JButton(new ImageIcon("choose_folder.png"));
+        Color componentColor = new Color(200, 200, 200);
+        
+        JButton enButton = new JButton(new ImageIcon("encrypt_file.png"));
+        JButton deButton = new JButton(new ImageIcon("decrypt_file.png"));
+        JButton baButton = new JButton(new ImageIcon("backup_file.png"));
+        JButton reButton = new JButton(new ImageIcon("restore_file.png"));
+        
     Main() {
         setTitle("Secure Vault");
         setSize(600, 600);
@@ -52,12 +65,11 @@ class Main extends JFrame implements ActionListener {
         // Designing Encryption Panel************************************************
         OpPanel enPanel = new OpPanel();
 
-        JButton enButton = new JButton("Encrypt File");
         enButton.setBounds(150, 210, 130, 35);
-        enButton.setBorder(new RoundedBorder(20));
         enButton.addActionListener(this);
 
         JLabel clickeden = new JLabel("Click Encrypt");
+        clickeden.setForeground(componentColor);
         clickeden.setBounds(420, 70, 100, 20);
 
         JLabel clickedimg = new JLabel(new ImageIcon("encrypt32.png"));
@@ -67,22 +79,19 @@ class Main extends JFrame implements ActionListener {
         warningLabelE.setForeground(Color.RED);
         warningLabelE.setVisible(false);
 
-        JButton chooseFileButton = new JButton("Choose File");
-        chooseFileButton.setBounds(250, 100, 130, 30);
+        chooseFileButton.setBounds(250, 100, 130, 34);
         chooseFileButton.setToolTipText("Select File to Encrypt");
-        chooseFileButton.setBorder(new RoundedBorder(20));
         chooseFileButton.addActionListener(this);
 
         ch1.setBounds(400, 100, 30, 30);
 
         // instruction for Encryption
-        JEditorPane insArea = new JEditorPane();
+        JTextPane insArea = new JTextPane();
         insArea.setContentType("text/html");
         insArea.setBounds(70, 270, 460, 220);
-        insArea.setBackground(Color.gray);
-        insArea.setForeground(Color.WHITE);
+        insArea.setBackground(new Color(39, 39, 39));
         insArea.setText(
-                "<span style=\"color:white\"><center><h2>Instructions</h2></center><br><ul><li><b>Choose File of any Standard Extension.</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>Please Note down the Key, If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file.</b></li></ul></span>");
+                "<font color = F0F0F0 ><span><center><h2>Instructions</h2></center><br><ul><li><b>Choose File of any Standard Extension.</b></li><li><b>Key</b><ol><li>It is for Advanced Security</li><li>Maximum Length is 16 Bytes</li><li>Please Note down the Key, If forgot can't Decrypt File</li></ol></li><li><b>Original  File will be replaced with encrypted file.</b></li></ul></span>");
         insArea.setEditable(false);
 
         enPanel.add(new FileLabel());
@@ -101,14 +110,13 @@ class Main extends JFrame implements ActionListener {
         OpPanel dePanel = new OpPanel();
 
         JLabel clickedde = new JLabel("Click Decrypt");
+        clickedde.setForeground(componentColor);
         clickedde.setBounds(420, 70, 100, 20);
 
         JLabel clickedimgD = new JLabel(new ImageIcon("decrypt32.png"));
         clickedimgD.setBounds(445, 25, 32, 32);
 
-        JButton deButton = new JButton("Decrypt File");
         deButton.setBounds(150, 210, 130, 35);
-        deButton.setBorder(new RoundedBorder(20));
         deButton.addActionListener(this);
 
         warningLabelD.setBounds(250, 135, 250, 20);
@@ -119,9 +127,8 @@ class Main extends JFrame implements ActionListener {
         warningLabelD1.setForeground(Color.RED);
         warningLabelD1.setVisible(false);
 
-        JButton chooseFileButtonD = new JButton("Choose File");
-        chooseFileButtonD.setBounds(250, 100, 130, 30);
-        chooseFileButtonD.setBorder(new RoundedBorder(20));
+        chooseFileButtonD.setBounds(250, 100, 130, 35);
+        chooseFileButtonD.setToolTipText("Select File to Encrypt");
         chooseFileButtonD.addActionListener(this);
 
         ch2.setBounds(400, 100, 30, 30);
@@ -129,10 +136,10 @@ class Main extends JFrame implements ActionListener {
         JEditorPane insArea1 = new JEditorPane();
         insArea1.setContentType("text/html");
         insArea1.setBounds(70, 270, 460, 230);
-        insArea1.setBackground(Color.gray);
+        insArea1.setBackground(new Color(39, 39, 39));
         insArea1.setForeground(Color.WHITE);
         insArea1.setText(
-                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Decrypt.</b></li><li><b>File should have \".fileEnc\" Extension.</b></li><li><b>Key :</b><ol><li>Do not enter Key if not used while Encrypting</li><li>Do not enter wrong key(Data might be lost permanently)</li></ol></li><li><b>Encrypted File will be replaced with Decrypted file.</b></li></ul>");
+                "<font color = F0F0F0 ><center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Decrypt.</b></li><li><b>File should have \".fileEnc\" Extension.</b></li><li><b>Key :</b><ol><li>Do not enter Key if not used while Encrypting</li><li>Do not enter wrong key(Data might be lost permanently)</li></ol></li><li><b>Encrypted File will be replaced with Decrypted file.</b></li></ul>");
         insArea1.setEditable(false);
 
         dePanel.add(new FileLabel());
@@ -151,9 +158,8 @@ class Main extends JFrame implements ActionListener {
         // Designing Backup Panel****************************************************
         BaPanel bePanel = new BaPanel();
 
-        JButton chooseFileButtonB = new JButton("Choose File");
-        chooseFileButtonB.setBounds(250, 100, 130, 30);
-        chooseFileButtonB.setBorder(new RoundedBorder(20));
+        chooseFileButtonB.setBounds(250, 100, 130, 35);
+        chooseFileButtonB.setToolTipText("Select File to Backup");
         chooseFileButtonB.addActionListener(this);
 
         ch3.setBounds(400, 100, 30, 30);
@@ -166,18 +172,16 @@ class Main extends JFrame implements ActionListener {
         warningLabelB2.setForeground(Color.RED);
         warningLabelB2.setVisible(false);
 
-        JButton baButton = new JButton("Backup File");
         baButton.setBounds(200, 160, 130, 35);
-        baButton.setBorder(new RoundedBorder(20));
         baButton.addActionListener(this);
 
         JEditorPane insArea2 = new JEditorPane();
         insArea2.setContentType("text/html");
         insArea2.setBounds(70, 270, 460, 220);
-        insArea2.setBackground(Color.gray);
+        insArea2.setBackground(new Color(39, 39, 39));
         insArea2.setForeground(Color.WHITE);
         insArea2.setText(
-                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Backup.</b></li><li><b>File can have any Extension.</b></li><li><b>You can Delete Original File after the Back Up.</b></li><li><b>You can Retrive BackUp file any time.</b></li></li><li><b>BackUp File will be Stored locally in PC.</b></li></ul>");
+                "<font color = F0F0F0 ><center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Backup.</b></li><li><b>File can have any Extension.</b></li><li><b>You can Delete Original File after the Back Up.</b></li><li><b>You can Retrive BackUp file any time.</b></li></li><li><b>BackUp File will be Stored locally in PC.</b></li></ul>");
         insArea2.setEditable(false);
 
         bePanel.add(new FileLabel());
@@ -191,44 +195,39 @@ class Main extends JFrame implements ActionListener {
         // Designing Restore Panel************************************************
         RePanel rePanel = new RePanel();
 
-        JButton chooseFileButtonR = new JButton("Choose File to Restore");
-        chooseFileButtonR.setBounds(250, 100, 220, 30);
-        chooseFileButtonR.setBorder(new RoundedBorder(20));
+        chooseFileButtonR.setBounds(250, 100, 130, 35);
         chooseFileButtonR.addActionListener(this);
 
-        ch4.setBounds(470, 100, 30, 30);
+        ch4.setBounds(400, 100, 30, 30);
 
         warningLabelR1.setBounds(250, 135, 250, 20);
         warningLabelR1.setForeground(Color.RED);
         warningLabelR1.setVisible(false);
 
         JLabel folder = new JLabel("Folder: ");
+        folder.setForeground(Color.RED);
         folder.setBounds(150, 160, 120, 30);
         folder.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 
-        JButton chooseFolder = new JButton("Choose Folder");
-        chooseFolder.setBounds(250, 160, 160, 30);
-        chooseFolder.setBorder(new RoundedBorder(20));
+        chooseFolder.setBounds(250, 160, 130, 35);
         chooseFolder.addActionListener(this);
 
-        ch5.setBounds(410, 160, 30, 30);
+        ch5.setBounds(400, 160, 30, 30);
 
         warningLabelR2.setBounds(250, 195, 350, 20);
         warningLabelR2.setForeground(Color.RED);
         warningLabelR2.setVisible(false);
 
-        JButton reButton = new JButton("Restore File");
         reButton.setBounds(200, 220, 130, 35);
-        reButton.setBorder(new RoundedBorder(20));
         reButton.addActionListener(this);
 
         JEditorPane insArea3 = new JEditorPane();
         insArea3.setContentType("text/html");
         insArea3.setBounds(70, 270, 460, 220);
-        insArea3.setBackground(Color.gray);
+        insArea3.setBackground(new Color(39, 39, 39));
         insArea3.setForeground(Color.WHITE);
         insArea3.setText(
-                "<center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Restore from BackUp Folder.</b></li><li><b>You can only Restore Files which have been BackUp Before.<<li><b>You can Restore Files at any time.</b></li></ul>");
+                "<font color = F0F0F0 ><center><h2>Instructions</h2></center><br><ul><li><b>Choose File you want to Restore from BackUp Folder.</b></li><li><b>You can only Restore Files which have been BackUp Before.<<li><b>You can Restore Files at any time.</b></li></ul>");
         insArea3.setEditable(false);
 
         rePanel.add(new FileLabel());
@@ -245,10 +244,10 @@ class Main extends JFrame implements ActionListener {
         // Designing About Panel******************************************************
         AboutPanel abPanel = new AboutPanel();
 
-        pane.addTab("Encrypt", new ImageIcon("Lock.png"), enPanel);
-        pane.addTab("Decrypt", new ImageIcon("Unlock.png"), dePanel);
-        pane.addTab("Backup", new ImageIcon("Backup-Restore.png"), bePanel);
-        pane.addTab("Restore", new ImageIcon("Backup-Restore.png"), rePanel);
+        pane.addTab("Encrypt  ", new ImageIcon("Lock.png"), enPanel);
+        pane.addTab(" Decrypt ", new ImageIcon("Unlock.png"), dePanel);
+        pane.addTab("Backup  ", new ImageIcon("BackupTab.png"), bePanel);
+        pane.addTab("Restore", new ImageIcon("RestoreTab.png"), rePanel);
         pane.addTab("About", new ImageIcon("about.png"), abPanel);
         add(pane);
     }
@@ -261,7 +260,8 @@ class Main extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getActionCommand() == "Choose File") {
+        if (e.getActionCommand() == "Choose File" || e.getSource() == chooseFileButton
+                || e.getSource() == chooseFileButtonD || e.getSource() == chooseFileButtonB) {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int r = j.showOpenDialog(null);
             if (r == JFileChooser.APPROVE_OPTION) {
@@ -294,7 +294,7 @@ class Main extends JFrame implements ActionListener {
             } else {
                 System.out.println("the user cancelled the operation");
             }
-        } else if (e.getActionCommand() == "Encrypt File") {
+        } else if (e.getSource() == enButton) {
 
             if (filePath == null) {
 
@@ -380,7 +380,7 @@ class Main extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
             }
 
-        } else if (e.getActionCommand() == "Decrypt File") {
+        } else if (e.getSource() == deButton) {
             // Logic to Decrypt File
 
             if (filePath == null) {
@@ -474,7 +474,7 @@ class Main extends JFrame implements ActionListener {
                         JOptionPane.INFORMATION_MESSAGE);
             }
 
-        } else if (e.getActionCommand() == "Backup File") {
+        } else if (e.getSource() == baButton) {
 
             if (filePath == null) {
 
@@ -494,7 +494,7 @@ class Main extends JFrame implements ActionListener {
 
             }
 
-        } else if (e.getActionCommand() == "Choose File to Restore") {
+        } else if (e.getSource() == chooseFileButtonR) {
             // Enter Backup Folder path in DestinationFilePath
             JFileChooser j = new JFileChooser("/home/aryan/Desktop/sem5/Microproject/AJP/Source Code/Backup");
             int r = j.showOpenDialog(null);
@@ -503,7 +503,7 @@ class Main extends JFrame implements ActionListener {
                 ch4.setVisible(true);
                 warningLabelR1.setVisible(false);
             }
-        } else if (e.getActionCommand() == "Choose Folder") {
+        } else if (e.getSource() == chooseFolder) {
 
             JFileChooser chooseFolderR = new JFileChooser();
             chooseFolderR.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -513,7 +513,7 @@ class Main extends JFrame implements ActionListener {
                 ch5.setVisible(true);
                 warningLabelR2.setVisible(false);
             }
-        } else if (e.getActionCommand() == "Restore File") {
+        } else if (e.getSource() == reButton) {
 
             if (filePathRe == null || folderPath == null) {
 
@@ -558,6 +558,7 @@ class FileLabel extends JLabel {
     FileLabel() {
         super("File: ");
         setBounds(150, 105, 100, 20);
+        setForeground(Color.RED);
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));
     }
 }
@@ -566,6 +567,7 @@ class KeyLabel extends JLabel {
     KeyLabel() {
         super("Key: ");
         setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+        setForeground(Color.RED);
         setBounds(150, 160, 130, 20);
     }
 }
@@ -633,18 +635,22 @@ class ProgressDialog extends JDialog {
 class OpPanel extends JPanel {
     OpPanel() {
         setLayout(null);
+        setBackground(new Color(18, 18, 18));
+        Color componentColor = new Color(240, 240, 240);
 
-        JLabel logo = new JLabel(new ImageIcon("Logo70.png"));
-        logo.setBounds(4, 4, 72, 58);
+        JLabel logo = new JLabel(new ImageIcon("logo64.png"));
+        logo.setBounds(4, 4, 64, 64);
 
         JLabel choosed = new JLabel("Choose File");
+        choosed.setForeground(componentColor);
         choosed.setBounds(90, 70, 100, 20);
 
         JLabel Entered = new JLabel("Enter Key");
+        Entered.setForeground(componentColor);
         Entered.setBounds(260, 70, 100, 20);
 
         JLabel file = new JLabel(new ImageIcon("Files32.png"));
-        file.setBounds(115, 25, 32, 32);
+        file.setBounds(110, 25, 32, 32);
 
         JLabel key = new JLabel(new ImageIcon("Key32.png"));
         key.setBounds(285, 25, 32, 32);
@@ -658,7 +664,7 @@ class OpPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.CYAN);
+        g.setColor(new Color(240, 240, 240));
         g.fillOval(100, 10, 60, 60);
         g.fillOval(270, 10, 60, 60);
         g.fillOval(430, 10, 60, 60);
@@ -677,14 +683,18 @@ class OpPanel extends JPanel {
 class BaPanel extends JPanel {
     BaPanel() {
         setLayout(null);
+        setBackground(new Color(18, 18, 18));
+        Color componentColor = new Color(240, 240, 240);
 
-        JLabel logo = new JLabel(new ImageIcon("Logo70.png"));
-        logo.setBounds(4, 4, 72, 58);
+        JLabel logo = new JLabel(new ImageIcon("logo64.png"));
+        logo.setBounds(4, 4, 64, 64);
 
         JLabel choosed = new JLabel("Choose File");
+        choosed.setForeground(componentColor);
         choosed.setBounds(155, 70, 100, 20);
 
         JLabel BackUp = new JLabel("Click Backup");
+        BackUp.setForeground(componentColor);
         BackUp.setBounds(360, 70, 100, 20);
 
         JLabel file = new JLabel(new ImageIcon("Files32.png"));
@@ -702,7 +712,7 @@ class BaPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.CYAN);
+        g.setColor(new Color(240, 240, 240));
         g.fillOval(160, 10, 60, 60);
         g.fillOval(370, 10, 60, 60);
 
@@ -718,17 +728,22 @@ class BaPanel extends JPanel {
 class RePanel extends JPanel {
     RePanel() {
         setLayout(null);
+        setBackground(new Color(18, 18, 18));
+        Color componentColor = new Color(240, 240, 240);
 
-        JLabel logo = new JLabel(new ImageIcon("Logo70.png"));
-        logo.setBounds(4, 4, 72, 58);
+        JLabel logo = new JLabel(new ImageIcon("logo64.png"));
+        logo.setBounds(4, 4, 64, 64);
 
         JLabel choosed = new JLabel("Choose File");
+        choosed.setForeground(componentColor);
         choosed.setBounds(90, 70, 100, 20);
 
         JLabel Entered = new JLabel("Choose Folder");
+        Entered.setForeground(componentColor);
         Entered.setBounds(250, 70, 120, 20);
 
         JLabel Restored = new JLabel("Click Restore");
+        Restored.setForeground(componentColor);
         Restored.setBounds(410, 70, 100, 20);
 
         JLabel file = new JLabel(new ImageIcon("Files32.png"));
@@ -751,7 +766,7 @@ class RePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.CYAN);
+        g.setColor(new Color(240, 240, 240));
         g.fillOval(100, 10, 60, 60);
         g.fillOval(270, 10, 60, 60);
         g.fillOval(430, 10, 60, 60);
@@ -770,10 +785,14 @@ class RePanel extends JPanel {
 class AboutPanel extends JPanel {
     AboutPanel() {
         setLayout(null);
-        JLabel logo = new JLabel(new ImageIcon("logo_black.jpeg"));
+        setBackground(new Color(18, 18, 18));
+        Color componentColor = new Color(200, 200, 200);
+
+        JLabel logo = new JLabel(new ImageIcon("logo200.png"));
         logo.setBounds(200, 5, 200, 200);
 
         JLabel l1 = new JLabel("SecureVault is a small and lightweight File Protection System .");
+        l1.setForeground(componentColor);
         l1.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
         l1.setBounds(40, 210, 550, 30);
 
@@ -784,21 +803,26 @@ class AboutPanel extends JPanel {
         l2.setForeground(Color.RED);
         JLabel l4 = new JLabel("26 Ayush Bhavsar.");
         l4.setBounds(240, 350, 400, 20);
+        l4.setForeground(componentColor);
         l4.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
 
         JLabel l5 = new JLabel("31 Nikhil Gujar.");
         l5.setBounds(240, 380, 400, 20);
+        l5.setForeground(componentColor);
         l5.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
 
         JLabel l3 = new JLabel("61 Aryan Patil.");
         l3.setBounds(240, 410, 400, 20);
+        l3.setForeground(componentColor);
         l3.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
 
         JLabel l6 = new JLabel("Copyright © 2021-2022 - the SecureVault team.");
         l6.setBounds(100, 240, 450, 20);
+        l6.setForeground(componentColor);
         l6.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
 
         JLabel l7 = new JLabel("Credits");
+        l7.setForeground(componentColor);
         l7.setBounds(270, 280, 100, 30);
         l7.setFont(new Font("Comic Sans MS", Font.BOLD, 17));
 
