@@ -244,7 +244,7 @@ class Main extends JFrame implements ActionListener {
         // Designing About Panel******************************************************
         AboutPanel abPanel = new AboutPanel();
 
-        pane.addTab("Encrypt  ", new ImageIcon("Lock.png"), enPanel);
+        pane.addTab("Encrypt", new ImageIcon("Lock.png"), enPanel);
         pane.addTab(" Decrypt ", new ImageIcon("Unlock.png"), dePanel);
         pane.addTab("Backup  ", new ImageIcon("BackupTab.png"), bePanel);
         pane.addTab("Restore", new ImageIcon("RestoreTab.png"), rePanel);
