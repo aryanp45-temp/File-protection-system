@@ -48,19 +48,19 @@ In this project, we have designed a file security system . When we use the opera
 <center>
 
 ### **Encrypt Tab**
-  ![Encrypt](https://raw.githubusercontent.com/AryanP45/File-protection-system/master/resource_md/encrypt.PNG)
+  ![Encrypt](./resource_md/encrypt.PNG)
 
 ### **Decrypt Tab**
-  ![Dencrypt](https://raw.githubusercontent.com/AryanP45/File-protection-system/master/resource_md/decrypt.PNG)
+  ![Dencrypt](./resource_md/decrypt.PNG)
 
 ### **Backup Tab**
-  ![Backup](https://raw.githubusercontent.com/AryanP45/File-protection-system/master/resource_md/backup.PNG)
+  ![Backup](./resource_md/backup.PNG)
 
 ### **Restore Tab**
-  ![Restore](https://raw.githubusercontent.com/AryanP45/File-protection-system/master/resource_md/restore.PNG)
+  ![Restore](./resource_md/restore.PNG)
 
 ### **About Tab**
-  ![About](https://raw.githubusercontent.com/AryanP45/File-protection-system/master/resource_md/about.PNG)
+  ![About](./resource_md/about.PNG)
 </center>
 
 ## 📝 **Contributing**
