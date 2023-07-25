@@ -2,6 +2,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.Date;
 import java.io.*;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -260,7 +261,7 @@ class Main extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getActionCommand() == "Choose File" || e.getSource() == chooseFileButton
+        if (Objects.equals(e.getActionCommand(), "Choose File") || e.getSource() == chooseFileButton
                 || e.getSource() == chooseFileButtonD || e.getSource() == chooseFileButtonB) {
             JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             int r = j.showOpenDialog(null);
